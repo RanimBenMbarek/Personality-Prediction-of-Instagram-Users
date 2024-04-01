@@ -14,9 +14,11 @@ def update_json(existing_data, new_data):
                 if item.get('bio') != info.get('bio'):
                     item['bio'] = info['bio']
                     updated = True
+                    print(f"Bio of {user} is Updated Sucessfully")
                     break
         if not updated:
             existing_data.append({'user': user, 'bio': info['bio']})
+            print(f"Bio of {user} is added as new user")
     return existing_data
 
 with open('config.json', 'r') as config_file:
