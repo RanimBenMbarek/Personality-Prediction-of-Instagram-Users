@@ -58,12 +58,12 @@ for user in instagram_profiles:
         'followers_count': followers.text,
         'followees_count': followees.text,
         'posts': [],
-        'bio':[bio,inner_bio],
         'O':0,
         'C':0,
         'E':0,
         'A':0,
-        'N':0
+        'N':0,
+        'bio':[bio,inner_bio]
     }
 
     post_count = 0

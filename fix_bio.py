@@ -36,7 +36,10 @@ password_input.send_keys(config['password'])
 password_input.send_keys(Keys.ENTER)
 
 time.sleep(10)
-instagram_profiles = ["sabalenka_aryna"]
+instagram_profiles =[
+
+   "connealymd",
+]
 data = {}
 for user in instagram_profiles:
     driver.get(f"https://www.instagram.com/{user}/")
