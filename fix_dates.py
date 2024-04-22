@@ -1,85 +1,67 @@
 from datetime import datetime
 
 from selenium import webdriver
-from selenium.common import NoSuchElementException
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-import requests
-import os
+from selenium.common.exceptions import NoSuchElementException
 import time
-import uuid
 import json
 
-start_time = time.time()
+
+def update_json(existing_data, new_data):
+    for user, info in new_data.items():
+        updated = False
+        for item in existing_data:
+            if item.get('user') == user:
+                if item.get('most_recent_date') != info.get('most_recent_date'):
+                    item['most_recent_date'] = info['most_recent_date']
+                    item['least_recent_date'] = info['least_recent_date']
+
+                    updated = True
+                    print(f"Dates of {user} are Updated Successfully")
+                    break
+        if not updated:
+            existing_data.append({
+                'most_recent_date': info['most_recent_date'],
+                'least_recent_date': info['least_recent_date']
+            })
+            print(f"New user {user} is added with bio and dates")
+
+    return existing_data
+
+
 with open('config.json', 'r') as config_file:
     config = json.load(config_file)
-service = Service("C:/chromedriver-win64/chromedriver.exe")
 
+service = Service("C:/chromedriver-win64/chromedriver.exe")
 driver = webdriver.Chrome(service=service)
 driver.get("https://www.instagram.com/")
 
-# Log in
-username_input = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, "username")))
-password_input = driver.find_element(By.NAME, "password")
-
+time.sleep(2)
+username_input = driver.find_element(By.XPATH,
+                                     "/html/body/div[2]/div/div/div[2]/div/div/div[1]/section/main/article/div[2]/div[1]/div[2]/form/div/div[1]/div/label/input")
 username_input.send_keys(config['username'])
+password_input = driver.find_element(By.XPATH,
+                                     "/html/body/div[2]/div/div/div[2]/div/div/div[1]/section/main/article/div[2]/div[1]/div[2]/form/div/div[2]/div/label/input")
 password_input.send_keys(config['password'])
 password_input.send_keys(Keys.ENTER)
 
-time.sleep(5)
-instagram_profiles = ["theweeknd"]
-all_data = {}
-
+time.sleep(10)
+instagram_profiles = [
+    "theweeknd",
+]
+data = {}
 for user in instagram_profiles:
     driver.get(f"https://www.instagram.com/{user}/")
-
-    time.sleep(10)
+    time.sleep(3)
+    post_count = 0
+    downloaded_urls = set()
+    done = False
 
     more_infos = driver.find_element(By.TAG_NAME, "ul")
     number_of_posts = more_infos.find_element(By.XPATH,
                                               "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/ul/li[1]/span/span")
-    followers = more_infos.find_element(By.XPATH,
-                                        "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/ul/li[2]/a/span/span")
-    try:
-        followees = more_infos.find_element(By.XPATH,
-                                            "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/ul/li[3]/a/span/span")
-    except NoSuchElementException:
-        followees = more_infos.find_element(By.XPATH,
-                                            "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/section/main/div/header/section/ul/li[3]/span/span")
-    try:
-        bio = driver.find_element(By.XPATH,
-                                  '//div[contains(@class, "x9f619")]/div[@class="_ap3a _aaco _aacu _aacy _aad6 _aade"]').text
-    except NoSuchElementException:
-        bio = ""
-
-    try:
-        inner_bio = driver.find_element(By.XPATH,
-                                        '//*[contains(@class, "_ap3a") and contains(@class, "_aaco") and contains(@class, "_aacu") and contains(@class, "_aacx") and contains(@class, "_aad6") and contains(@class, "_aade")]').text
-    except NoSuchElementException:
-        inner_bio = ""
-
-    data = {
-        'user': user,
-        'posts_count': number_of_posts.text,
-        'followers_count': followers.text,
-        'followees_count': followees.text,
-        'bio': [bio, inner_bio],
-        'posts': [],
-        'most_recent_date': "1-1-1900",
-        'least_recent_date': "1-1-1900",
-        'O': 0,
-        'C': 0,
-        'E': 0,
-        'A': 0,
-        'N': 0
-    }
-
-    post_count = 0
-    downloaded_urls = set()
-    done = False
 
     min_date = datetime.max.strftime('%Y-%m-%d')
     max_date = datetime.min.strftime('%Y-%m-%d')
@@ -153,7 +135,6 @@ for user in instagram_profiles:
                 original_tab = driver.window_handles[0]
                 driver.switch_to.window(original_tab)
 
-            # Scrape end date if it's the last photo
             if post_count == int(number_of_posts.text) - 1 or post_count == 99:
                 driver.execute_script("window.open('');")
                 new_tab = driver.window_handles[-1]
@@ -176,43 +157,26 @@ for user in instagram_profiles:
 
                 original_tab = driver.window_handles[0]
                 driver.switch_to.window(original_tab)
-
             if image_url not in downloaded_urls:
                 post_count += 1
                 downloaded_urls.add(image_url)
-                post_id = str(uuid.uuid4())
-                data['posts'].append({
-                    'post_id': post_id,
-                    'caption': post_caption,
-                    'url': image_url
-                })
-                response = requests.get(image_url)
-                if response.status_code == 200:
-                    os.makedirs(f"images/{user}", exist_ok=True)
-                    with open(f"images/{user}/{post_id}.jpg", "wb") as file:
-                        file.write(response.content)
-                    print(f"Image {post_count} de {user} téléchargée avec succès.")
-                else:
-                    print(f"Échec du téléchargement de l'image {post_count} de {user}.")
+                print("photo num ", post_count)
 
-    data['most_recent_date'] = max_date
-    data['least_recent_date'] = min_date
-    all_data[user] = data
+    data[user] = {
+        'most_recent_date': max_date,
+        'least_recent_date': min_date,
+    }
 
-    # Append data to data.json file
-    filename = 'data1.json'
-    try:
-        with open(filename, 'r') as json_file:
-            existing_data = json.load(json_file)
-    except json.decoder.JSONDecodeError:
-        existing_data = []
+filename = 'data.json'
+try:
+    with open(filename, 'r') as json_file:
+        existing_data = json.load(json_file)
+except json.decoder.JSONDecodeError:
+    existing_data = []
 
-    existing_data.append(data)
-    with open(filename, 'w') as json_file:
-        json.dump(existing_data, json_file, indent=4)
+updated_data = update_json(existing_data, data)
+
+with open('data.json', 'w') as file:
+    json.dump(updated_data, file, indent=4)
 
 driver.quit()
-end_time = time.time()
-execution_time = end_time - start_time
-
-print(f"Execution time: {execution_time} seconds")
