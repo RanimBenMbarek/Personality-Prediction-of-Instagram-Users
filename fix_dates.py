@@ -135,7 +135,8 @@ for user in instagram_profiles:
                 original_tab = driver.window_handles[0]
                 driver.switch_to.window(original_tab)
 
-            if post_count == int(number_of_posts.text) - 1 or post_count == 99:
+            number_of_posts_text = number_of_posts.text.replace(',', '')
+            if post_count == int(number_of_posts_text) - 1 or post_count == 99:
                 driver.execute_script("window.open('');")
                 new_tab = driver.window_handles[-1]
                 driver.switch_to.window(new_tab)

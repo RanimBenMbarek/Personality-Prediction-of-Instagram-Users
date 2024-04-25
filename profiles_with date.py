@@ -30,7 +30,7 @@ password_input.send_keys(config['password'])
 password_input.send_keys(Keys.ENTER)
 
 time.sleep(5)
-instagram_profiles = ["theweeknd"]
+instagram_profiles = ["henryfreestone","henrymoodie"]
 all_data = {}
 
 for user in instagram_profiles:
@@ -153,8 +153,8 @@ for user in instagram_profiles:
                 original_tab = driver.window_handles[0]
                 driver.switch_to.window(original_tab)
 
-            # Scrape end date if it's the last photo
-            if post_count == int(number_of_posts.text) - 1 or post_count == 99:
+            number_of_posts_text = number_of_posts.text.replace(',', '')
+            if post_count == int(number_of_posts_text) - 1 or post_count == 99:
                 driver.execute_script("window.open('');")
                 new_tab = driver.window_handles[-1]
                 driver.switch_to.window(new_tab)
