@@ -34,7 +34,7 @@ def update_json(existing_data, new_data):
 with open('config.json', 'r') as config_file:
     config = json.load(config_file)
 
-service = Service("C:/chromedriver-win64/chromedriver.exe")
+service = Service("C:/Users/katko/Downloads/chromedriver-win64/chromedriver-win64/chromedriver.exe")
 driver = webdriver.Chrome(service=service)
 driver.get("https://www.instagram.com/")
 
@@ -49,7 +49,7 @@ password_input.send_keys(Keys.ENTER)
 
 time.sleep(10)
 instagram_profiles = [
-    "theweeknd",
+    "juliaroberts","joeygraceffa","jillian.batt"
 ]
 data = {}
 for user in instagram_profiles:
@@ -89,16 +89,16 @@ for user in instagram_profiles:
 
             # Now, you can get the href attribute
             href_value = ancestor_a.get_attribute('href')
-
-            try:
-                svg_element = pinned.find_element(By.TAG_NAME, 'svg')
-                title_element = svg_element.get_attribute('aria-label')
-                if title_element == "Pinned post icon":
-                    pinned_exists = True
-                else:
+            if pinned_exists is not False:
+                try:
+                    svg_element = pinned.find_element(By.TAG_NAME, 'svg')
+                    title_element = svg_element.get_attribute('aria-label')
+                    if title_element == "Pinned post icon":
+                        pinned_exists = True
+                    else:
+                        pinned_exists = False
+                except NoSuchElementException:
                     pinned_exists = False
-            except NoSuchElementException:
-                pinned_exists = False
 
             image = post.find_element(By.TAG_NAME, 'img')
             post_caption = image.get_attribute('alt')
@@ -136,6 +136,7 @@ for user in instagram_profiles:
                 driver.switch_to.window(original_tab)
 
             number_of_posts_text = number_of_posts.text.replace(',', '')
+            number_of_posts_text = number_of_posts.text.replace('\u202f', '')
             if post_count == int(number_of_posts_text) - 1 or post_count == 99:
                 driver.execute_script("window.open('');")
                 new_tab = driver.window_handles[-1]
@@ -168,7 +169,7 @@ for user in instagram_profiles:
         'least_recent_date': min_date,
     }
 
-filename = 'data.json'
+filename = 'data1.json'
 try:
     with open(filename, 'r') as json_file:
         existing_data = json.load(json_file)
@@ -177,7 +178,9 @@ except json.decoder.JSONDecodeError:
 
 updated_data = update_json(existing_data, data)
 
-with open('data.json', 'w') as file:
+with open('data1.json', 'w') as file:
     json.dump(updated_data, file, indent=4)
 
 driver.quit()
+
+#%%
