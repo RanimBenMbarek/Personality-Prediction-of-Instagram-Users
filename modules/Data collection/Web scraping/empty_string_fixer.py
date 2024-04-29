@@ -24,3 +24,6 @@ replace_empty_strings(data)
 # Save the modified data back to the JSON file
 with open('data.json', 'w') as json_file:
     json.dump(data, json_file, indent=4)
+print('done')
+
+#%%

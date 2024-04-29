@@ -1,0 +1,35 @@
+Sorted caption counts (user, caption count):
+User: juliaroberts, Captions starting with 'photo': 85
+User: mleblanc, Captions starting with 'photo': 76
+User: kianlawley, Captions starting with 'photo': 72
+User: samosphillipos, Captions starting with 'photo': 68
+User: sofiaiesmaili, Captions starting with 'photo': 55
+User: missbessb, Captions starting with 'photo': 48
+User: madeinchina211, Captions starting with 'photo': 47
+User: rizahmed, Captions starting with 'photo': 37
+User: jennaortega, Captions starting with 'photo': 31
+User: katemansi, Captions starting with 'photo': 31
+User: lianajernigan, Captions starting with 'photo': 30
+User: jennxpenn, Captions starting with 'photo': 28
+User: reynoldpoer, Captions starting with 'photo': 27
+User: milliebobbybrown, Captions starting with 'photo': 26
+User: joeygraceffa, Captions starting with 'photo': 25
+User: jillian.batt, Captions starting with 'photo': 22
+User: mallorypruitt, Captions starting with 'photo': 22
+User: kristenmcatee, Captions starting with 'photo': 20
+User: missremiashten, Captions starting with 'photo': 18
+User: mariahamato, Captions starting with 'photo': 15
+User: sfredrickson, Captions starting with 'photo': 14
+User: jaimejinlee, Captions starting with 'photo': 12
+User: lucywangyuxin, Captions starting with 'photo': 8
+User: nicolemiizuka, Captions starting with 'photo': 7
+User: nnxwang, Captions starting with 'photo': 7
+User: lupitanyongo, Captions starting with 'photo': 6
+User: mattrking, Captions starting with 'photo': 5
+User: kennedyclairewalsh, Captions starting with 'photo': 0
+User: leanadeebb, Captions starting with 'photo': 0
+User: martinebeerman, Captions starting with 'photo': 0
+User: sarang.hoe, Captions starting with 'photo': 0
+
+Sorted caption counts in array format:
+[["juliaroberts", 85], ["mleblanc", 76], ["kianlawley", 72], ["samosphillipos", 68], ["sofiaiesmaili", 55], ["missbessb", 48], ["madeinchina211", 47], ["rizahmed", 37], ["jennaortega", 31], ["katemansi", 31], ["lianajernigan", 30], ["jennxpenn", 28], ["reynoldpoer", 27], ["milliebobbybrown", 26], ["joeygraceffa", 25], ["jillian.batt", 22], ["mallorypruitt", 22], ["kristenmcatee", 20], ["missremiashten", 18], ["mariahamato", 15], ["sfredrickson", 14], ["jaimejinlee", 12], ["lucywangyuxin", 8], ["nicolemiizuka", 7], ["nnxwang", 7], ["lupitanyongo", 6], ["mattrking", 5], ["kennedyclairewalsh", 0], ["leanadeebb", 0], ["martinebeerman", 0], ["sarang.hoe", 0]]

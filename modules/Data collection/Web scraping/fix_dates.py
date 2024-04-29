@@ -49,7 +49,7 @@ password_input.send_keys(Keys.ENTER)
 
 time.sleep(10)
 instagram_profiles = [
-    "juliaroberts","joeygraceffa","jillian.batt"
+    "hallebailey","heathhussar","haleyybaylee","henrycavill","highdeekuan","hellotinah","its_ed","jeannieelisemai"
 ]
 data = {}
 for user in instagram_profiles:
@@ -81,6 +81,7 @@ for user in instagram_profiles:
             post = element.find_element(By.CLASS_NAME, '_aagv')
             try:
                 pinned = element.find_element(By.CLASS_NAME, '_aatp')
+                pinned_exists = True
             except NoSuchElementException:
                 pinned_exists = False
 
@@ -169,7 +170,7 @@ for user in instagram_profiles:
         'least_recent_date': min_date,
     }
 
-filename = 'data1.json'
+filename = 'data.json'
 try:
     with open(filename, 'r') as json_file:
         existing_data = json.load(json_file)
@@ -178,7 +179,7 @@ except json.decoder.JSONDecodeError:
 
 updated_data = update_json(existing_data, data)
 
-with open('data1.json', 'w') as file:
+with open('data.json', 'w') as file:
     json.dump(updated_data, file, indent=4)
 
 driver.quit()
