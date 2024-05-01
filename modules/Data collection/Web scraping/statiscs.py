@@ -1,7 +1,13 @@
 import json
 
 def count_photo_starting_captions_by_user(data):
-    user_caption_counts = []  # List to store user caption counts as tuples (user, caption count)
+    # Initialize dictionaries to store users based on their caption counts
+    users_10=[]
+    users_10_to_20 = []
+    users_20_to_30 = []
+    users_30_to_40 = []
+    users_above_40 = []
+
     for user_data in data:
         user = user_data["user"]
         caption_count = 0
@@ -9,32 +15,52 @@ def count_photo_starting_captions_by_user(data):
             caption = post["caption"]
             if caption.lower().startswith("photo"):
                 caption_count += 1
-        user_caption_counts.append((user, caption_count))
 
-    # Sort the user_caption_counts list based on caption count (descending order)
-    sorted_user_caption_counts = sorted(user_caption_counts, key=lambda x: x[1], reverse=True)
-    return sorted_user_caption_counts
+        # Categorize users based on their caption counts
+        if caption_count < 10:
+            users_10.append(user)
+        elif 10 <= caption_count < 20:
+            users_10_to_20.append(user)
+        elif 20 <= caption_count < 30:
+            users_20_to_30.append(user)
+        elif 30 <= caption_count < 40:
+            users_30_to_40.append(user)
+        else:
+            users_above_40.append(user)
 
-# Load JSON data from file
-file_path = "data1.json"  # Update this with the actual file path
-output_file_path = "output.txt"  # Output file path
+    user_categories = {
+        "0_to10":users_10,
+        "10_to_20": users_10_to_20,
+        "20_to_30": users_20_to_30,
+        "30_to_40": users_30_to_40,
+        "above_40": users_above_40
+    }
 
-with open(file_path, "r") as json_file:
-    data = json.load(json_file)
+    # Print the length of each array
+    for category, users_list in user_categories.items():
+        print(f"Length of {category}: {len(users_list)}")
+
+    return user_categories
+
+# Load JSON data from file with UTF-8 encoding
+file_path = "data.json"  # Update this with the actual file path
+output_file_path = "output_all_info.json"  # Output file path
+
+try:
+    with open(file_path, "r", encoding="utf-8") as json_file:
+        data = json.load(json_file)
+except FileNotFoundError:
+    print(f"Error: File '{file_path}' not found.")
+    exit(1)
+except json.JSONDecodeError:
+    print(f"Error: Unable to load JSON data from '{file_path}'.")
+    exit(1)
 
 # Call the function with the loaded JSON data
-sorted_caption_counts = count_photo_starting_captions_by_user(data)
+user_categories = count_photo_starting_captions_by_user(data)
 
-# Write the sorted caption counts to a text file and also write them in an array format
+# Write all information to a single JSON file
 with open(output_file_path, "w") as output_file:
-    output_file.write("Sorted caption counts (user, caption count):\n")
-    for user, caption_count in sorted_caption_counts:
-        output_file.write(f"User: {user}, Captions starting with 'photo': {caption_count}\n")
-
-    # Write the sorted caption counts in an array format
-    output_file.write("\nSorted caption counts in array format:\n")
-    output_file.write(json.dumps(sorted_caption_counts))
+    output_file.write(json.dumps(user_categories, indent=4))
 
 print(f"Output written to {output_file_path}")
-
-#%%
