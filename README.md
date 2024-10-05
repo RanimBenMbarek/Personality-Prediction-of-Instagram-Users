@@ -39,23 +39,23 @@ In this project, we developed deep learning models to predict the OCEAN personal
 
 7. **Results**:
 
-#### Image-Based Models:
-- **Simple CNN**:
-  ![Classification Report for Simple CNN](./images/CNNResults.png)
-  *Figure 1: Classification report for the Simple CNN model, showing precision, recall, and F1 score across OCEAN traits.*
+    #### Image-Based Models:
+   - **Simple CNN**:
+     ![Classification Report for Simple CNN](./images/CNNResults.png)
+     *Figure 1: Classification report for the Simple CNN model, showing precision, recall, and F1 score across OCEAN traits.*
 
-- **VGG16 (Pretrained)**:
-  ![Classification Report for VGG16](./images/VGG16Results.png)
-  *Figure 2: Classification report for the VGG16 model, demonstrating improved performance over the Simple CNN.*
+   - **VGG16 (Pretrained)**:
+     ![Classification Report for VGG16](./images/VGG16Results.png)
+     *Figure 2: Classification report for the VGG16 model, demonstrating improved performance over the Simple CNN.*
 
-- **ResNet18 (Pretrained)**:
- ![Classification Report for Resnet](./images/ResnetResults.png)
-  *Figure 3: Performance of ResNet18, showing higher accuracy across all traits compared to VGG16 and Simple CNN.*
+   - **ResNet18 (Pretrained)**:
+    ![Classification Report for Resnet](./images/ResnetResults.png)
+     *Figure 3: Performance of ResNet18, showing higher accuracy across all traits compared to VGG16 and Simple CNN.*
 
-#### Text-Based Models:
-- **BERT**:
-    ![Classification Report for BERT](./images/BertResults.png)
-- Data augmentation (via translation) improved performance by 3-4%.
+    #### Text-Based Models:
+   - **BERT**:
+       ![Classification Report for BERT](./images/BertResults.png)
+     - Data augmentation (via translation) improved performance by 3-4%.
   
 
 ---
