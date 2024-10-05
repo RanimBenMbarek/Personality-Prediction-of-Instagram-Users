@@ -1,13 +1,13 @@
 ## Personality Prediction of Instagram Users
-
-This repository presents our end-of-year project: Personality Prediction of Instagram Users. We developed deep learning multi-label models to predict the OCEAN personality traits.
+Understanding personality traits from online behavior is increasingly relevant in fields like psychology, marketing, and user experience design. 
+In this project, we developed deep learning models to predict the OCEAN personality traits (Openness, Conscientiousness, Extraversion, Agreeableness, Neuroticism) based on Instagram posts, combining image and text data to derive insights into user personalities. 
 
 ### Project Overview
 
 1. **Data Collection**:
    - Using the Meta Developer Graph API Explorer, we gathered post URLs, captions, and dates from public profiles.
-   - Stored the data in JSON files, which were then converted to CSV format.
-   - Stored the images in a shared drive.
+   - Data was stored in JSON files, which were then converted to CSV format.
+   - Images were stored in a shared drive.
 
 2. **Data Preparation**:
    - Normalized and resized images.
@@ -35,6 +35,30 @@ This repository presents our end-of-year project: Personality Prediction of Inst
 6. **Deployment**:
    - Implemented a Flask application/dashboard for real-time testing and deployment of the models.
 
+
+
+7. **Results**:
+
+#### Image-Based Models:
+- **Simple CNN**:
+  ![Classification Report for Simple CNN](./images/CNNResults.png)
+  *Figure 1: Classification report for the Simple CNN model, showing precision, recall, and F1 score across OCEAN traits.*
+
+- **VGG16 (Pretrained)**:
+  ![Classification Report for VGG16](./images/VGG16Results.png)
+  *Figure 2: Classification report for the VGG16 model, demonstrating improved performance over the Simple CNN.*
+
+- **ResNet18 (Pretrained)**:
+ ![Classification Report for Resnet](./images/ResnetResults.png)
+  *Figure 3: Performance of ResNet18, showing higher accuracy across all traits compared to VGG16 and Simple CNN.*
+
+#### Text-Based Models:
+- **BERT**:
+    ![Classification Report for BERT](./images/BertResults.png)
+- Data augmentation (via translation) improved performance by 3-4%.
+  
+
+---
 ### Project Structure
 
 - **data/**: Contains the collected data.
@@ -44,4 +68,6 @@ This repository presents our end-of-year project: Personality Prediction of Inst
   - **data_analysis/**: Visualization.
   - **models_training/**: Training scripts for image-based (CNN/VGG16/ResNet18) and text-based (BERT) models.
 
-This project  was  made  by a group of INSAT Students and  Data Science and Deep Learning Enthusiasts.
+---
+
+This project was created by a group of INSAT students who are passionate about Data Science and Deep Learning.
