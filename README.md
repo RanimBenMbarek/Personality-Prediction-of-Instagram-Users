@@ -83,5 +83,7 @@ In this project, we developed deep learning models to predict the OCEAN personal
   - **models_training/**: Training scripts for image-based (CNN/VGG16/ResNet18) and text-based (BERT) models.
 
 ---
-
+### Presentation Link :
+[Presentation Link :](https://www.canva.com/design/DAGHL5NdVKo/qnu_lm-lvXfLayvd5uPz5g/edit)
+---
 This project was created by a group of INSAT students who are passionate about Data Science and Deep Learning.
